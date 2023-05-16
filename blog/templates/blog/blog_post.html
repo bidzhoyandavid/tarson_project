@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Blog
+{% endblock %}
+
+
+{% block content %}
+    <div class="container mt-3">
+        <div class="row">
+            {{ post.image }} <br>
+            <b>
+                {{ post.title }} <br>
+            </b>
+            {{ post.date_created }} <br>
+            {{ post.text }} <br>
+        </div>
+    </div>
+{% endblock %}

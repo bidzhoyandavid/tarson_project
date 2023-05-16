@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Search Results of 
+{% endblock %}
+
+
+{% block content %}
+    <h2>
+
+
+
+
+
+
+    </h2>
+    <div class="container">
+        <p>
+            Title: {{ news_current.title }} <br>
+            Summary: {{ news_current.summary }} <br>
+            Time published: {{ news_current.time_published }} <br>
+            Source: {{ news_current.source }} <br>
+            Domain: {{ news_current.source_id__domain }} <br>
+            Topics: {{ news_current.newstopicsconnection__topic_id__topics }} <br>
+            Category: {{ news_current.category_id__category }} <br>
+            Score: {{ news_current.score }} <br>
+
+            {{ news_current }}
+        </p>
+    </div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Search Results
+{% endblock %}
+
+{% block content %}
+<h1>Search results</h1>
+<ul>
+    {% for symbol in symbol_list %}
+        <li>
+            <a href="{% url 'stock_symbol' symbol=symbol.symbol %}">
+                {{ symbol.symbol }}
+                {{ symbol.name }}
+            </a>
+            
+            {{ symbol.ipo_date }}
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Search Results of {{ stock.name }}
+{% endblock %}
+
+{% block content %}
+    <h1>Stock details of {{ stock.name }}</h1>
+
+    <!-- Company overview -->
+    <p>
+        <h3>Company name</h3>
+        {{ stock.name }}
+    </p>
+    <p>
+        <h4>Symbol</h4>
+        {{ stock.symbol }}
+    </p>
+    <p>
+        <h5>IPO date:</h5>
+        {{ stock.ipo_date }}
+    </p>
+    <p>
+        <h5>CIK: </h5>
+        {{ stock.cik }}
+    </p>
+    <p>
+        <h5>Sector: </h5>
+        {{ stock.sector.sector_name }}
+    </p>
+    <p>
+        <h5>Industry</h5>
+        {{ stock.industry.industry_name }}
+    </p>
+
+    <p>
+        <h5>Exchange</h5>
+        {{ stock.exchange.exchange_name }}
+    </p>
+    <p>
+        <h5>Security Type</h5>
+        {{ stock.security_type.security_type }}
+    </p>
+
+
+
+
+    <!-- Company ratios -->
+    <h5>{{ stock.name }}'s Beta coefficient</h5>
+    {{ stock_ratios.beta }}
+
+    <h5>Market capitalisation</h5>
+    {{ stock_ratios.market_cap }}
+
+    <h5>PE ratio</h5>
+    {{ stock_ratios.pe_ratio }}
+
+    <h5>PEG ratio</h5>
+    {{ stock_ratios.peg_ratio }}
+
+    <h5>EPS</h5>
+    {{ stock_ratios.eps }}
+
+    <h5>Price/Sales ratio</h5>
+    {{ stock_ratios.price2sales_ratio }}
+
+    <h5>Price/Book ratio</h5>
+    {{ stock_ratios.price2book_ratio }}
+
+    <h5>EV/Revenue ratio</h5>
+    {{ stock_ratios.ev2revenue }}
+
+    <h5>EV/EBITDA ratio</h5>
+    {{ stock_ratios.ev2ebitda }}
+
+    <h5>ROA TTM</h5>
+    {{ stock_ratios.roa_ttm }}
+
+    <h5>ROE TTM</h5>
+    {{ stock_ratios.roe_ttm }}
+
+
+  <!-- Balance sheet -->
+  <h3>Balance sheet</h3>
+  <h5>Fiscal date</h5>
+  {{ stock_balance.fiscal_date }}
+
+  <h5>Total assets</h5>
+  {{ stock_balance.total_assets }}
+
+
+  <!-- Income statement -->
+  <h3>Income statement</h3>
+  <h5>Gross profit</h5>
+  {{ stock_income.gross_profit }}
+
+  <h5>Total revenue</h5>
+  {{ stock_income.total_revenue }}
+
+
+  <!-- Cash flow -->
+  <h3>Cash flow</h3>
+  <h5>Operating Cash flow</h5>
+  {{ stock_cash.operating_cashflow }}
+
+  <h5>Profit (Losses)</h5>
+  {{ stock_cash.profit_loss }}
+
+
+  <script>
+        // Render the plotly figure inside the plotly-div
+        document.getElementById('plotly-div').innerHTML = '{{ plot_div|safe }}'
+    </script>
+
+    <!-- Risk data latest -->
+    {{ riskData_latest.date_at }}
+    <h5>Historical VaR</h5>
+    {{ riskData_latest.historical_var }}
+
+    <h5>Parametric VaR</h5>
+    {{ riskData_latest.parametric_var }}
+
+    <h5>EWMA VaR</h5>
+    {{ riskData_latest.ewma_var }}
+
+
+    <h5>Sharp ratio</h5>
+    {{ riskData_latest.sharp_ratio }}
+
+    <h5>Sortino ratio</h5>
+    {{ riskData_latest.sortino_ratio }}
+
+    <h5>Treynor ratio</h5>
+    {{ riskData_latest.treynor_ratio }}
+
+
+    <h5>Stock news</h5>
+    {% for news in stock_news %}
+    <div>
+        <li>
+            <p>
+                Title: 
+                {{ news.title }} 
+                <br>
+                ID: {{ news }} <br>
+                Time published: {{ news.time_published }} <br>
+                Sentiment: {{ news.newscompanyconnection__ticker_sentiment_label_id__sentiment }} <br>
+                Sentiment score: {{ news.newscompanyconnection__ticker_sentiment_score }} <br>
+            </p>
+        </li>
+    </div>
+
+    {% endfor %}
+{% endblock %}

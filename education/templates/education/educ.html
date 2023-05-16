@@ -9,4 +9,18 @@
 
 {% block content %}
     <h1>This is Financial education page</h1>
+    <form method="get" action = "{% url 'education' %}">
+        <input type="text" name = "q" placeholder = "Search by name...">
+        <input type="submit">
+     </form>
+
+    {% for educ in education_list %}
+        <li>
+            <a href="{% url 'educationpost' educ.id %}" target="_blank">
+                {{ educ.title }}
+            </a>
+            {{ educ.image }}
+            {{ educ.date_upload }}
+        </li>
+    {% endfor %}
 {% endblock %}
