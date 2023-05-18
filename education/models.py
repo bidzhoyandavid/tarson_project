@@ -17,6 +17,9 @@ class Vocabulary(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return f"/voacbulary/{self.id}/"
+
     class Meta:
         verbose_name = "Vocabulary"
         verbose_name_plural = "Vocabulary"
@@ -33,9 +36,13 @@ class EducationPost(models.Model):
     image = models.ImageField(null=True, blank=True)
     content = RichTextUploadingField(blank=False, null=False, verbose_name="content")
     date_upload = models.DateField(auto_now_add=True)
+    tags = TaggableManager()
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return f"/education/{self.id}/"
 
     class Meta:
         verbose_name = "Education Post"
@@ -44,23 +51,3 @@ class EducationPost(models.Model):
             "id",
             "title",
         )
-
-
-# class EducationTags(models.Model):
-#     tag = models.CharField(max_length=30, null=False, blank=False)
-
-#     def __str__(self):
-#         return self.tag
-
-#     class Meta:
-#         verbose_name = "Education Tag"
-#         verbose_name_plural = "Education Tags"
-#         ordering = (
-#             "id",
-#             "tag",
-#         )
-
-
-# class PostTagConnection(models.Model):
-#     post = models.ForeignKey("EducationPost", on_delete=models.PROTECT, null=True)
-#     tag = models.ForeignKey("EducationTags", on_delete=models.PROTECT, null=True)

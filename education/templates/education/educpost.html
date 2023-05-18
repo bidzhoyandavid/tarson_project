@@ -10,7 +10,18 @@
     <div class="container mt-4">
         {{ post.title }} <br>
         {{ post.date_upload }} <br>
-        {{ post.content }} <br>
+        {{ post.content|safe }} <br>
+
     </div>
+
+    <h3>Similar Education Posts</h3>
+    {% for post in similar_posts %}
+    <p>
+        <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+    </p>
+    {% empty %}
+    <h4>There are no similar posts yet</h4>
+    {% endfor %}
+
 
 {% endblock %}

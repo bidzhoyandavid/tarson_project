@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Education
+{% endblock %}
+
+
+{% block content %}
+    <div class="container mt-4">
+        <div class="row">
+            <form method="get" action = "{% url 'vocabulary' %}">
+                <input type="text" name = "q" placeholder = "Search term...">
+                <input type="submit">
+            </form>
+
+            {% for item in vocabulary_list %}
+            <a href="{% url 'vocabularyitem' item.id %}">{{ item.title }} </a>
+            <br>
+            {% endfor %}
+
+        </div>
+    </div>
+
+
+{% endblock %}

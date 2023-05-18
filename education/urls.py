@@ -8,6 +8,7 @@ urlpatterns = [
     path("", views.education, name="education"),
     path("<int:educ_id>/", views.educationPost, name="educationpost"),
     path("vocabulary/", views.vocabulary, name="vocabulary"),
-    path("vocabulary/<str:title>", views.vocabularyItem, name="vocabularyitem"),
+    path("vocabulary/<int:voc_id>", views.vocabularyItem, name="vocabularyitem"),
     path("ckedit", include("ckeditor_uploader.urls")),
+    path("tag/<slug:tag_slug>", views.education, name="educ_by_tag"),
 ] + static(settings.MEDIA_URL, documnent_root=settings.MEDIA_ROOT)

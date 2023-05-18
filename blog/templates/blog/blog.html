@@ -9,23 +9,31 @@
 
 {% block content %}
     <h1>This is the Blog page</h1>
-    <form method="get" action ="{% url 'blog_search' %}">
+    <form method="get" action ="{% url 'blog' %}">
         <input type="text" name = "q" placeholder = "Search blog posts...">
-                <input type="submit">
+        <input type="submit">
     </form>
 
 
     {% for blog in blogs %}
     <li>
         <p>
-            <a href="{% url 'blog_post' blog.id %}">
+            <a href="{% url 'blog_post' blog.id %}" target="_blank">
                 {{ blog.image }} <br>
             </a>
-            <a href="{% url 'blog_post' blog.id %}">
+            <a href="{% url 'blog_post' blog.id %}" target="_blank">
                 {{ blog.title }} <br>
             </a>
             {{ blog.date_created }} <br>
-            {{ blog.text }} <br>
+            {% if tag %}
+            <p>Post tags with {{tag.name}}</p>
+            {% endif %}
+            Tags: {% for tag in blog.tags.all %}
+                <a href="{% url 'blog_by_tag' tag.slug %}">{{ tag.name }}</a>
+                {% if not forloop.last %},{% endif %}
+            {% endfor %}
+            <br>
+            {{ blog.text|safe }} <br>
         </p>
     </li>
     {% endfor %}

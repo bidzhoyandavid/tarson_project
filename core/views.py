@@ -9,37 +9,77 @@ from django.db import IntegrityError
 
 # Create your views here.
 
+
 def home(request):
-    return render(request, 'core/home.html')
+    context = {}
+    return render(request, "core/home.html", context=context)
+
 
 def about(request):
-    return render(request, 'core/about.html')
+    context = {}
+    return render(request, "core/about.html", context=context)
+
 
 def contacts(request):
-    return render(request, 'core/contacts.html')
+    context = {}
+    return render(request, "core/contacts.html", context=context)
+
 
 def signupuser(request):
-    if request.method == 'GET':
-        return render(request, 'core/signup.html', {'form': UserCreationForm})
+    if request.method == "GET":
+        context = {"register_form": UserCreationForm}
+        return render(request, "core/signup.html", context=context)
     else:
-        if request.POST['password1'] == request.POST['password2']:
+        if request.POST["password1"] == request.POST["password2"]:
             try:
-                user = User.objects.create_user(request.POST['username'], password=request.POST['password1'])
+                user = User.objects.create_user(
+                    request.POST["username"], password=request.POST["password1"]
+                )
                 user.save()
                 login(request, user)
-                return redirect('home')
+                return redirect("home")
             except IntegrityError:
-                return render(request, 'core/signup.html', {'form': UserCreationForm, 'error': 'The username is already exists'})
+                context = {
+                    "register_form": UserCreationForm,
+                    "error": "The username is already exists",
+                }
+                return render(
+                    request,
+                    "core/signup.html",
+                    context=context,
+                )
         else:
-            return render(render, 'core/signup.html', {'form':UserCreationForm, 'error': "Password didn't match"})
-        
+            context = {
+                "register_form": UserCreationForm,
+                "error": "Password didn't match",
+            }
+            return render(
+                request,
+                "core/signup.html",
+                context=context,
+            )
+
+
 def login(request):
-    if request.method == 'GET':
-        return render(request, 'core/login.html', {'form': AuthenticationForm})
+    if request.method == "GET":
+        context = {"login_form": AuthenticationForm}
+        return render(request, "core/login.html", context=context)
     else:
-        user = authenticate(request, username = request.POST['username'], password = request.POST['password'])
+        user = authenticate(
+            request,
+            username=request.POST["username"],
+            password=request.POST["password"],
+        )
         if user is None:
-            return render(request, 'core/login.html', {'form': AuthenticationForm, 'error': "The username doesn't exist"})
+            context = {
+                "form": AuthenticationForm,
+                "error": "Invalid username or password!",
+            }
+            return render(
+                request,
+                "core/login.html",
+                context=context,
+            )
         else:
             login(request, user)
-            return redirect('home')
+            return redirect("home")

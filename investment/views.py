@@ -33,8 +33,10 @@ def stock_search(request):
 
 
 def stock_symbol(request, symbol):
-    stock = Company.objects.get(symbol__contains=symbol)
-    stock_ratios = CompanyRatios.objects.get(name_id__symbol=symbol)
+    stock = Company.objects.filter(symbol__contains=symbol)
+    if stock.exists():
+        stock = stock.first()
+    stock_ratios = CompanyRatios.objects.filter(name_id__symbol=symbol)
     stock_balance = CompanyBalanceSheet.objects.filter(
         companycommon_ptr_id__company_id__symbol=symbol
     ).latest("fiscal_date")
@@ -53,6 +55,7 @@ def stock_symbol(request, symbol):
     stock_news = (
         News.objects.filter(newscompanyconnection__company__symbol=symbol)
         .values(
+            "id",
             "title",
             "time_published",
             "score",

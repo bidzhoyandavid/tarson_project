@@ -19,6 +19,15 @@
             <a href="{% url 'educationpost' educ.id %}" target="_blank">
                 {{ educ.title }}
             </a>
+            
+            {% if tag %}
+            <p>Post tags with {{tag.name}}</p>
+            {% endif %}
+            Tags: {% for tag in educ.tags.all %}
+                <a href="{% url 'educ_by_tag' tag.slug %}">{{ tag.name }}</a>
+                {% if not forloop.last %},{% endif %}
+            {% endfor %}
+            
             {{ educ.image }}
             {{ educ.date_upload }}
         </li>
