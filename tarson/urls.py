@@ -20,9 +20,10 @@ from blog import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('', include('core.urls')),
-    path('blog/', include('blog.urls')),
-    path('education/', include('education.urls')),
-    path('investment/', include('investment.urls')),
-    path('loans/', include('loans.urls'))
+    path("", include("core.urls")),
+    path("blog/", include("blog.urls")),
+    path("education/", include("education.urls")),
+    path("investment/", include("investment.urls")),
+    path("loans/", include("loans.urls")),
+    path("accounts/", include("allauth.urls")),
 ]

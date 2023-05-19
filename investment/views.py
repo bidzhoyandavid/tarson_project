@@ -16,6 +16,7 @@ from .models import (
     NewsCompanyConnection,
     NewsTopicsConnection,
 )
+from .forms import *
 
 
 # Create your views here.
@@ -123,3 +124,16 @@ def stock_news(request, pk):
     news_current = News.objects.get(pk=pk)
     context = {"news_current": news_current}
     return render(request, "investment/stock_news.html", context=context)
+
+
+def stock_portfolio(request):
+    if request.method == "POST":
+        form = Portfolio(request.POST)
+        if form.is_valid():
+            selected_choices = form.cleaned_data["symbols"]
+
+    else:
+        form = Portfolio
+
+    context = {"form": form}
+    return render(request, "investment/stock_portfolio.html", context=context)

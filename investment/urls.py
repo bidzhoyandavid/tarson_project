@@ -9,4 +9,5 @@ urlpatterns = [
     path("stock/<str:symbol>", views.stock_symbol, name="stock_symbol"),
     path("screener/", views.stock_screener, name="stock_screener"),
     path("news/<int:pk>", views.stock_news, name="stock_news"),
+    path("portfolio/", views.stock_portfolio, name="stock_portfolio"),
 ]

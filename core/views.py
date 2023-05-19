@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
+from django.contrib import messages
 
 
 # Create your views here.
@@ -36,7 +37,11 @@ def signupuser(request):
                     request.POST["username"], password=request.POST["password1"]
                 )
                 user.save()
-                login(request, user)
+                # username = form.cleaned_data.get('username')
+                # messages.success(request, f"New account created: {username}")
+                login(
+                    request, user, backend="django.contrib.auth.backends.ModelBackend"
+                )
                 return redirect("home")
             except IntegrityError:
                 context = {
@@ -60,7 +65,7 @@ def signupuser(request):
             )
 
 
-def login(request):
+def login_request(request):
     if request.method == "GET":
         context = {"login_form": AuthenticationForm}
         return render(request, "core/login.html", context=context)
@@ -81,5 +86,11 @@ def login(request):
                 context=context,
             )
         else:
-            login(request, user)
+            login(request, user, backend="django.contrib.auth.backends.ModelBackend")
             return redirect("home")
+
+
+def logout_request(request):
+    logout(request)
+    messages.info(request, "You have successfully logged out.")
+    return redirect("home")

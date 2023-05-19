@@ -9,6 +9,10 @@
 {% block content %}
 <h1>Search results</h1>
 <ul>
+    <form method="get" action = "{% url 'stock_search' %}">
+        <input type="text" name = "q" placeholder = "Search by symbol...">
+        <input type="submit">
+    </form>
     {% for symbol in symbol_list %}
         <li>
             <a href="{% url 'stock_symbol' symbol=symbol.symbol %}">

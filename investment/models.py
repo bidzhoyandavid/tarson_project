@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -616,8 +617,6 @@ class CommodityPrice(models.Model):
 
 
 # -------------------- economic indicators ------------------
-
-
 class Indicator(models.Model):
     indicatorType = models.CharField(
         max_length=20, null=False, blank=False, verbose_name="indicatorType"
@@ -647,3 +646,13 @@ class IndicatorValue(models.Model):
     maturity = models.ForeignKey("Maturity", on_delete=models.CASCADE, null=True)
     value = models.FloatField(null=True)
     unit = models.CharField(max_length=50, null=True)
+
+
+# --------------------- Portfolios ----------------
+class StockPortfolio(models.Model):
+    title = models.CharField(
+        max_length=100, null=True, blank=True, verbose_name="title"
+    )
+    owner = models.ForeignKey(User, on_delete = models.PROTECT)
+    stocks = models.ManyToManyField(Company)
+    date_at = models.DateTimeField(auto_now_add=True)

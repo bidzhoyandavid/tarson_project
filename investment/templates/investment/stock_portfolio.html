@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Search Results of {{ stock.name }}
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <div class="row">
+            <h1>Compose portfolio</h1>
+
+            <form method="post">
+                {% csrf_token %}
+                {{ form.search_query }}
+                <br>
+                {{ form.symbols }}
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+
+
+{% endblock %}
