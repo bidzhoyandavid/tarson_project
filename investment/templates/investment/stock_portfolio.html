@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block title %}
-    Search Results of {{ stock.name }}
+    Compose portfolio
 {% endblock %}
 
 {% block content %}
@@ -13,9 +13,9 @@
 
             <form method="post">
                 {% csrf_token %}
-                {{ form.search_query }}
+                {{ form.title }}
                 <br>
-                {{ form.symbols }}
+                {{ form.stocks }}
                 <input type="submit" value="Submit">
             </form>
         </div>

@@ -3,7 +3,7 @@ from django.db.models.query import QuerySet, Q
 import pandas as pd
 import plotly.graph_objs as go
 import plotly.offline as opy
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, ListView
 from .models import (
     Company,
@@ -15,8 +15,10 @@ from .models import (
     News,
     NewsCompanyConnection,
     NewsTopicsConnection,
+    StockPortfolio,
 )
 from .forms import *
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -126,14 +128,26 @@ def stock_news(request, pk):
     return render(request, "investment/stock_news.html", context=context)
 
 
+@login_required
 def stock_portfolio(request):
     if request.method == "POST":
-        form = Portfolio(request.POST)
+        form = CreatePortfolio(request.POST)
         if form.is_valid():
-            selected_choices = form.cleaned_data["symbols"]
-
+            obj = form.save(commit=False)
+            obj.owner_id = request.user.id
+            obj.save()
+            form.save_m2m()
+            return redirect("investment")
     else:
-        form = Portfolio
+        form = CreatePortfolio
 
     context = {"form": form}
     return render(request, "investment/stock_portfolio.html", context=context)
+
+
+@login_required
+def stock_portfolio_detail(request, portf_id):
+    portfolio = StockPortfolio_stocks.objects.get(stock_portfolio_id=portf_id)
+    context = {"portfolio": portfolio}
+    return render(request, "investment/stock_portfolio_detail.html", context=context)
+
