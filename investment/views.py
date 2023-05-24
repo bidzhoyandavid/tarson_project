@@ -151,3 +151,17 @@ def stock_portfolio_detail(request, portf_id):
     context = {"portfolio": portfolio}
     return render(request, "investment/stock_portfolio_detail.html", context=context)
 
+
+def checkbox_search_view(request):
+    form = CheckboxSearchForm(request.POST or None)
+
+    if request.method == "POST":
+        if form.is_valid():
+            selected_options = form.cleaned_data["options"]
+            # Do something with the selected options
+
+    # Fetch the data from the Item model
+    items = Company.objects.all()
+    form.fields["options"].choices = [(item.id, item.name) for item in items]
+
+    return render(request, "investment/checkbox_search.html", {"form": form})

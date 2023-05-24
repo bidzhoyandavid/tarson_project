@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Investments
+{% endblock %}
+
+{% block content %}
+
+    <div class="container mt-5">
+        <div class="row">
+            {{ form|safe }}
+            <button type="submit">Submit</button>
+        </div>
+    </div>
+
+
+{% endblock %}

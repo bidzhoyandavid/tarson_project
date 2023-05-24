@@ -15,4 +15,5 @@ urlpatterns = [
         views.stock_portfolio_detail,
         name="stock_portfolio_detail",
     ),
+    path("checkbox-search/", views.checkbox_search_view, name="checkbox_search"),
 ]
