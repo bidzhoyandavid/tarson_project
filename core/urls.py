@@ -11,4 +11,5 @@ urlpatterns = [
     path("login/", views.login_request, name="login_request"),
     path("signup/", views.signupuser, name="signup"),
     path("logout/", views.logout_request, name="logout_request"),
+    path("social-auth/", include("social_django.urls", namespace="social")),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

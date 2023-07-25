@@ -15,9 +15,14 @@
         <h1>Sign up</h1>
 
         <div class=" signin text-center">
-            <a href="{% provider_login_url 'google' %}" class="text-dark">
-                <img src="{% static 'signingoogle.png' %}" style="width:14rem; height:auto">
-            </a>
+            <button>
+                <a href="{% provider_login_url 'google' %}" class="btn btn-primary text-center">
+                    Login with Google
+                </a>
+            </button>
+            <button>
+                <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-primary text-center">Login with Facebook</a>
+            </button>
         </div>
 
         <br><br>
